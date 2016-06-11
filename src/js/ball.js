@@ -9,9 +9,11 @@ var ball = {
     dy: -2,
 
     drawBall: function() {
+        ctx.beginPath();
         var ballImage = new Image();
         ballImage.src = "dist/images/ball.png";
         ctx.drawImage(ballImage, ball.x, ball.y, 2 * ball.radius, 2 * ball.radius);
+        ctx.closePath();
     },
 }
 

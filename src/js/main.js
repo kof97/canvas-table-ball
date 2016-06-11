@@ -74,9 +74,92 @@ var attchEvent = {
 
 var game = {
 
-    runStatus: null,
+    runStatus: 0,
 
     reset: function() {
+        
+        function getEventPosition(e){  
+            var x, y;  
+            if (e.layerX || e.layerX == 0) {  
+                x = e.layerX;  
+                y = e.layerY;  
+            } else if (e.offsetX || e.offsetX == 0) { // Opera  
+                x = e.offsetX;  
+                y = e.offsetY;  
+            }  
+
+            return {x: x, y: y}; 
+
+        } 
+
+        function start(e) {
+            p = getEventPosition(e); 
+             
+            if (p.x > 265 && p.x < 435 && p.y > 115 && p.y < 285) { 
+                game.runStatus = 1;
+
+                var rate = (function() {
+                    var k = Math.random() * 10;
+                    if (k <= 1) {
+                        k += 1;
+                    } else if (k >= 9) {
+                        k -= 1;
+                    };
+
+                    return (k * 0.1);
+
+                }());
+
+                ball.x = canvas.width * rate;
+                ball.y = canvas.height * rate; 
+                ball.dx *= -1;
+                ball.dy *= -1;
+
+                canvas.removeEventListener('click', start, false); 
+                document.removeEventListener("keydown", keyDownStart, false);
+
+            } 
+
+        }
+
+        function keyDownStart(e) {
+
+            if (e.keyCode == 32) {
+                game.runStatus = 1;
+
+                var rate = (function() {
+                    var k = Math.random() * 10;
+                    if (k <= 1) {
+                        k += 1;
+                    } else if (k >= 9) {
+                        k -= 1;
+                    };
+
+                    return (k * 0.1);
+
+                }());
+
+                ball.x = canvas.width * rate;
+                ball.y = canvas.height * rate;
+                ball.dx *= -1;
+                ball.dy *= -1;
+
+                canvas.removeEventListener('click', start, false); 
+                document.removeEventListener("keydown", keyDownStart, false);
+
+            };
+
+        }
+
+        ctx.beginPath();  
+        var bgImage = new Image();
+        bgImage.src = "dist/images/start1.png";
+        ctx.drawImage(bgImage, canvas.width / 2 - 90, canvas.height / 2 - 90, 180, 180);
+         
+        canvas.addEventListener('click', start, false); 
+        document.addEventListener("keydown", keyDownStart, false);
+
+        ctx.closePath();
 
     },
 
@@ -85,26 +168,24 @@ var game = {
 
             if (ball.y > a.y - 10 && ball.y < a.y + a.height + 10) {
                 ball.dx = -ball.dx;
-                a.score += 1;
             } else {
+
                 // game over
-                // b.score += 1;
-                clearInterval(game.runStatus);
-                // alert("game over");
-                // document.location.reload();
+                b.score += 1;
+                game.runStatus = 0; 
+
             };
 
         } else if (ball.x + ball.dx > canvas.width - 2 * ball.radius) {
 
             if (ball.y > b.y - 10 && ball.y < b.y + b.height + 10) {
                 ball.dx = -ball.dx;
-                b.score += 1;
             } else {
-                // game over
 
-                clearInterval(game.runStatus);
-                // alert("game over");
-                // document.location.reload();
+                // game over
+                a.score += 1;
+                game.runStatus = 0; 
+
             };
 
         };
@@ -121,9 +202,11 @@ var game = {
     draw: function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        ctx.beginPath();
         var bgImage = new Image();
         bgImage.src = "dist/images/bg.gif";
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+        ctx.closePath();
 
         ball.drawBall();
 
@@ -133,19 +216,24 @@ var game = {
         a.drawScore();
         b.drawScore();
 
-        attchEvent.move();
-        
-        game.collisionTest();
+        if (game.runStatus == 0) {
+            game.reset();
+        } else {
 
+            attchEvent.move();
+            game.collisionTest();
+
+        };
+        
     },
 
     init: function() {
         attchEvent.listener();
-        game.runStatus = setInterval(game.draw, 10);
+
+        setInterval(game.draw, 10);
+
     }
 
 }
-
-
 
 game.init();

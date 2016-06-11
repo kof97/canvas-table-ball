@@ -21,9 +21,11 @@ var playerB = {
     },
 
     drawScore: function() {
-        ctx.font = "20px Arial";
+        ctx.beginPath();
+        ctx.font = "25px Arial";
         ctx.fillStyle = "#000";
         ctx.fillText("Score: " + playerB.score, canvas.width / 1.2, canvas.height - 2);
+        ctx.closePath();
     }
 }
 
