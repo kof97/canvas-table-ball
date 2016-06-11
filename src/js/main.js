@@ -101,7 +101,7 @@ var game = {
                 b.score += 1;
             } else {
                 // game over
-                // a.score += 1;
+
                 clearInterval(game.runStatus);
                 // alert("game over");
                 // document.location.reload();
