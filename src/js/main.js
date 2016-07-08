@@ -118,7 +118,7 @@ var game = {
                 canvas.removeEventListener('click', start, false); 
                 document.removeEventListener("keydown", keyDownStart, false);
 
-            } 
+            }
 
         }
 
