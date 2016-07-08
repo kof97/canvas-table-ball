@@ -95,7 +95,7 @@ var game = {
 		function start(e) {
 			p = getEventPosition(e);
 			 
-			if (p.x > 265 && p.x < 435 && p.y > 115 && p.y < 285) { 
+			if (p.x > 265 && p.x < 435 && p.y > 115 && p.y < 285) {
 				game.runStatus = 1;
 
 				var rate = (function() {
@@ -111,11 +111,11 @@ var game = {
 				}());
 
 				ball.x = canvas.width * rate;
-				ball.y = canvas.height * rate; 
+				ball.y = canvas.height * rate;
 				ball.dx *= -1;
 				ball.dy *= -1;
 
-				canvas.removeEventListener('click', start, false); 
+				canvas.removeEventListener('click', start, false);
 				document.removeEventListener("keydown", keyDownStart, false);
 
 			}
@@ -144,19 +144,19 @@ var game = {
 				ball.dx *= -1;
 				ball.dy *= -1;
 
-				canvas.removeEventListener('click', start, false); 
+				canvas.removeEventListener('click', start, false);
 				document.removeEventListener("keydown", keyDownStart, false);
 
 			};
 
 		}
 
-		ctx.beginPath();  
+		ctx.beginPath();
 		var bgImage = new Image();
 		bgImage.src = "dist/images/start1.png";
 		ctx.drawImage(bgImage, canvas.width / 2 - 90, canvas.height / 2 - 90, 180, 180);
 		 
-		canvas.addEventListener('click', start, false); 
+		canvas.addEventListener('click', start, false);
 		document.addEventListener("keydown", keyDownStart, false);
 
 		ctx.closePath();
@@ -172,7 +172,7 @@ var game = {
 
 				// game over
 				b.score += 1;
-				game.runStatus = 0; 
+				game.runStatus = 0;
 
 			};
 
@@ -184,7 +184,7 @@ var game = {
 
 				// game over
 				a.score += 1;
-				game.runStatus = 0; 
+				game.runStatus = 0;
 
 			};
 
