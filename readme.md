@@ -2,6 +2,10 @@
 
 canvas 实现的双人桌球小游戏
 
+地址：
+
+> http://kof666.com/table-ball/
+
 ---
 
 直接运行 `index.html`
